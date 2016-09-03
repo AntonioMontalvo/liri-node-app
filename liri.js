@@ -20,7 +20,7 @@ var client = new Twitter({
 });
 
 var params = {screen_name: 'ant mont', count: 20};
-
+////node liri.js my-tweets
 if (process.argv[2] === 'my-tweets'){
 	client.get('statuses/user_timeline', params, function(error, tweets, response) {
 		  if (!error) {
@@ -30,7 +30,17 @@ if (process.argv[2] === 'my-tweets'){
 		  }
 	});
 }
- 
+ ///node liri.js tweet-something. change status string to your new tweet.
+if (process.argv[2] === 'tweet-something'){
+	client.post('statuses/update', {status: 'just another tweet'},  function(error, tweet, response) {
+		  if(error) throw error;
+		  console.log(tweet.created_at);
+	}); 
+} 
+
+//////////////////////////////////
+//			SPOTIFY 			//
+//////////////////////////////////
 
 
 
