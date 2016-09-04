@@ -1,7 +1,5 @@
 //Using the require package we access other dependencies. 
 //npm install export 	//npm install require //npm install twitter
-var myTweets = require('./keys.js');
-
 
 //////////////////////////////////
 //			Twitter 			//
@@ -9,7 +7,7 @@ var myTweets = require('./keys.js');
 
 // This will show your last 20 tweets and when they were created at in your terminal. For more on this take a look at the twitter API documentation https://dev.twitter.com/rest/reference/get/statuses/mentions_timeline
 
-
+var myTweets = require('./keys.js');
 var Twitter = require('twitter');
  
 var client = new Twitter({
@@ -31,14 +29,14 @@ if (process.argv[2] === 'my-tweets'){
 		  }
 	});
 }
- ///node liri.js tweet-something. change status string to your new tweet.
+
 if (process.argv[2] === 'tweet-something'){
 	client.post('statuses/update', {status: 'just another tweet'},  function(error, tweet, response) {
 		  if(error) throw error;
 		  console.log(tweet.created_at);
 	}); 
 } 
-
+ ///node liri.js tweet-something. change status string to your new tweet.
 //////////////////////////////////
 //			SPOTIFY 			//
 //////////////////////////////////
@@ -104,7 +102,7 @@ if (process.argv[2] === 'movie-this'){
 }
 
 
-
+c
 
 
 
