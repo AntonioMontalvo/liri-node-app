@@ -46,9 +46,6 @@ if (process.argv[2] === 'tweet-something'){
 
 var spotify = require('spotify');
 
-
-
-
 if (process.argv[2] === 'spotify-this-song'){
  if(process.argv[3] === undefined){
 	console.log('the is the 3rd arg ' + true);
@@ -73,21 +70,18 @@ if (process.argv[2] === 'spotify-this-song'){
 		});
 	 } else if (process.argv[3] !== undefined){
 
-var nodeArgs = process.argv;
+		var nodeArgs = process.argv;
 
-// Create an empty string for holding the address
-var mySong = "";
+		// Create an empty string for holding the address
+		var mySong = "";
 
-// Capture all the words in the address (again ignoring the first two Node arguments)
-for (var i=3; i < nodeArgs.length; i++){
+		// Capture all the words in the address (again ignoring the first two Node arguments)
+		for (var i=3; i < nodeArgs.length; i++){
 
-	// Build a string with the address.
-	mySong = mySong + "+" + nodeArgs[i];
-}
-
-
-	 	// var mySong = process.argv[3];
-		spotify.search({ type: 'track', query: mySong, limit: '1' }, function(err, data) {
+			// Build a string with the address.
+			mySong = mySong + "+" + nodeArgs[i];
+		}
+		spotify.search({ type: 'track', query: mySong}, function(err, data) {
 		    if ( err ) {
 		        console.log('Error occurred: ' + err);
 		        return;
@@ -116,6 +110,9 @@ for (var i=3; i < nodeArgs.length; i++){
 
 if (process.argv[2] === 'movie-this'){
 	var movieName = process.argv[3];
+	if(process.argv[3] === undefined){
+		movieName = 'Mr. Nobody';
+	}
 	var queryUrl = 'http://www.omdbapi.com/?t=' + movieName +'&y=&tomatoes=true&plot=short&r=json';
 
 
@@ -138,11 +135,47 @@ if (process.argv[2] === 'movie-this'){
 	});
 }
 
+//////////////////////////////////
+//			FS READFILE	    //
+//////////////////////////////////
+// NPM Package for reading and writing files
+//fs stands for file system. build in in node.
+//node liri.js do-what-it-says
+var fs = require('fs'); 
 
-	// 
-	// }
-	// if (process.argv[2] === 'do-what-it-says'){
-	// }
+if (process.argv[2] === 'do-what-it-says'){
+	var dataArr;
+	 fs.readFile("random.txt", "utf8", function(error, data) {
+		if(error){
+			return console.log(error);
+		}
+		// // Then split it by commas (to make it more readable)
+		dataArr = data.split(',');
+		var trimmedArr = dataArr.map(function(item){
+			return item.trim().length;
+		});
+		console.log(dataArr[1]);
+	
+	 		spotify.search({ type: 'track', query: dataArr[1]}, function(err, data) {
+		    if ( err ) {
+		        console.log('Error occurred: ' + err);
+		        return;
+		    }
+		    console.log('Spotify has the following information about your song:');    
+		    console.log('The name of the song you have requested is: '); 
+		    console.log(data.tracks.items[0].name);
+		    console.log("");
+		 	console.log('Here is the name of your artist.');
+		 	console.log(data.tracks.items[0].artists[0].name);
+		    console.log("");
+		 	console.log('Here is the name of album.')
+		 	console.log(data.tracks.items[0].album.name);
+		 	console.log("");
+		    console.log('Here is a preview link of the song.')
+		 	console.log(data.tracks.items[0].preview_url);	
+		});
+	});
+}	 
 
 
 //APPLICATION COMMANDS
