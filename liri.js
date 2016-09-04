@@ -45,30 +45,67 @@ if (process.argv[2] === 'tweet-something'){
 //API Endpoint Referencehttps://developer.spotify.com/web-api/search-item/ 
 
 var spotify = require('spotify');
-var mySong = process.argv[3];
+
 
 
 
 if (process.argv[2] === 'spotify-this-song'){
- 
-	spotify.search({ type: 'track', query: mySong, limit: 3 }, function(err, data) {
-	    if ( err ) {
-	        console.log('Error occurred: ' + err);
-	        return;
-	    }
-	    console.log('Spotify has the following information about your song:');    
-	    console.log('The name of the song you have requested is: '); 
-	    console.log(data.tracks.items[0].name);
-	    console.log("");
-	 	console.log('Here is the name of your artist.');
-	 	console.log(data.tracks.items[0].artists[0].name);
-	    console.log("");
-	 	console.log('Here is the name of album.')
-	 	console.log(data.tracks.items[0].album.name);
-	 	console.log("");
-	    console.log('Here is a preview link of the song.')
-	 	console.log(data.tracks.items[0].preview_url);	
-	});
+ if(process.argv[3] === undefined){
+	console.log('the is the 3rd arg ' + true);
+	spotify.search({ type: 'track', query: 'artist:ace+of+base+track:the+sign', limit: '1' }, function(err, data) {
+		    if ( err ) {
+		        console.log('Error occurred: ' + err);
+		        return;
+		    }
+		    // console.log(data);
+		    console.log('Spotify has the following information about your song:');    
+		    console.log('The name of the song you have requested is: '); 
+		    console.log(data.tracks.items[0].name);
+		    console.log("");
+		 	console.log('Here is the name of your artist.');
+		 	console.log(data.tracks.items[0].artists[0].name);
+		    console.log("");
+		 	console.log('Here is the name of album.')
+		 	console.log(data.tracks.items[0].album.name);
+		 	console.log("");
+		    console.log('Here is a preview link of the song.')
+		 	console.log(data.tracks.items[0].preview_url);	
+		});
+	 } else if (process.argv[3] !== undefined){
+
+var nodeArgs = process.argv;
+
+// Create an empty string for holding the address
+var mySong = "";
+
+// Capture all the words in the address (again ignoring the first two Node arguments)
+for (var i=3; i < nodeArgs.length; i++){
+
+	// Build a string with the address.
+	mySong = mySong + "+" + nodeArgs[i];
+}
+
+
+	 	// var mySong = process.argv[3];
+		spotify.search({ type: 'track', query: mySong, limit: '1' }, function(err, data) {
+		    if ( err ) {
+		        console.log('Error occurred: ' + err);
+		        return;
+		    }
+		    console.log('Spotify has the following information about your song:');    
+		    console.log('The name of the song you have requested is: '); 
+		    console.log(data.tracks.items[0].name);
+		    console.log("");
+		 	console.log('Here is the name of your artist.');
+		 	console.log(data.tracks.items[0].artists[0].name);
+		    console.log("");
+		 	console.log('Here is the name of album.')
+		 	console.log(data.tracks.items[0].album.name);
+		 	console.log("");
+		    console.log('Here is a preview link of the song.')
+		 	console.log(data.tracks.items[0].preview_url);	
+		});
+	}
 }
 
 //////////////////////////////////
@@ -100,14 +137,6 @@ if (process.argv[2] === 'movie-this'){
 		}
 	});
 }
-
-
-c
-
-
-
-
-
 
 
 	// 
