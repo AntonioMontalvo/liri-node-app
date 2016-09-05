@@ -31,7 +31,7 @@ if (process.argv[2] === 'my-tweets'){
 }
 
 if (process.argv[2] === 'tweet-something'){
-	client.post('statuses/update', {status: 'just another tweet'},  function(error, tweet, response) {
+	client.post('statuses/update', {status: 'Done with basic requirement LIRI'},  function(error, tweet, response) {
 		  if(error) throw error;
 		  console.log(tweet.created_at);
 	}); 
@@ -77,8 +77,6 @@ if (process.argv[2] === 'spotify-this-song'){
 
 		// Capture all the words in the address (again ignoring the first two Node arguments)
 		for (var i=3; i < nodeArgs.length; i++){
-
-			// Build a string with the address.
 			mySong = mySong + "+" + nodeArgs[i];
 		}
 		spotify.search({ type: 'track', query: mySong}, function(err, data) {
@@ -123,22 +121,29 @@ if (process.argv[2] === 'movie-this'){
 		if (!error && response.statusCode == 200) {
 			// console.log(body);
 			console.log("Movie title: " + JSON.parse(body)["Title"]);
+			console.log("");
 			console.log("Release year: " + JSON.parse(body)["Year"]);
+			console.log("");
 			console.log("IMDB rating: " + JSON.parse(body)["imdbRating"]);
+			console.log("");
 			console.log("This movie was produced in: " + JSON.parse(body)["Country"]);
+			console.log("");
 			console.log("This movie is in: " + JSON.parse(body)["Language"]);
+			console.log("");
 			console.log("Plot: " + JSON.parse(body)["Plot"]);
+			console.log("");
 			console.log("Actors: " + JSON.parse(body)["Actors"]);
+			console.log("");
 			console.log("Rotten Tomatoes Rating: " + JSON.parse(body)["tomatoRating"]);
+			console.log("");
 			console.log("Rotten Tomatoes URL: " + JSON.parse(body)["tomatoURL"]);
 		}
 	});
 }
 
 //////////////////////////////////
-//			FS READFILE	    //
+//			FS READ-FILE	        //
 //////////////////////////////////
-// NPM Package for reading and writing files
 //fs stands for file system. build in in node.
 //node liri.js do-what-it-says
 var fs = require('fs'); 
@@ -154,7 +159,7 @@ if (process.argv[2] === 'do-what-it-says'){
 		var trimmedArr = dataArr.map(function(item){
 			return item.trim().length;
 		});
-		console.log(dataArr[1]);
+		// console.log(dataArr[1]);
 	
 	 		spotify.search({ type: 'track', query: dataArr[1]}, function(err, data) {
 		    if ( err ) {
@@ -176,7 +181,18 @@ if (process.argv[2] === 'do-what-it-says'){
 		});
 	});
 }	 
+//////////////////////////////////
+//	BONUS	FS APPEND-FILE	    //
+//////////////////////////////////
 
+var nodeArgs = process.argv;
+var myArgs = process.argv.slice(2);
+
+	fs.appendFile( "log.txt", myArgs + " ", function(err) {
+		if(err){
+			console.log(err);
+		}
+	}); 
 
 //APPLICATION COMMANDS
 //node liri.js my-tweets
